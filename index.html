@@ -15,6 +15,7 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
 /* 학생 맞춤형 프롬프트 생성기 */
+#poster-fields[hidden],#cards-fields[hidden]{display:none!important}.kind input:focus-visible{outline:3px solid #b95583;outline-offset:3px}
 .builder{background:linear-gradient(135deg,#fff,#fff5f9);border:2px solid #dbafc4;border-radius:24px;padding:clamp(18px,3vw,34px);margin:26px 0 32px;box-shadow:var(--shadow);scroll-margin-top:18px}
 .builder h2{font-size:clamp(25px,3vw,35px);line-height:1.35;margin:0 0 10px;letter-spacing:-.04em}
 .builder p{margin:0 0 15px}.builder-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:20px 0}.builder-field{display:flex;flex-direction:column;gap:8px;min-width:0}.builder-field label{font-size:17px;font-weight:850;color:#3f2941}.builder-field select,.builder-field input,.builder-field textarea{border:1.5px solid #cdbfc9;border-radius:12px;padding:13px 14px;background:white;color:#211b29;width:100%;font-size:17px;min-height:52px}.builder-field textarea{min-height:80px;resize:vertical}.builder-field :focus-visible{outline:3px solid #9b649b;outline-offset:2px}.builder-wide{grid-column:1/-1}.builder .kind{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.builder .kind label{display:inline-flex;align-items:center;gap:9px;border:2px solid #dbc5d2;padding:10px 16px;border-radius:40px;background:white;font-weight:800;cursor:pointer}.builder .kind label:has(input:checked){background:#4c304b;color:white;border-color:#4c304b}.builder .kind input{width:20px;height:20px;accent-color:#b95583}.builder-button-row{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0}.builder button{border:0;border-radius:13px;padding:13px 22px;font-weight:850;font-size:17px}.build-action{background:#563a68;color:white}.copy-build{background:#168044;color:#fff}.copy-build.done{background:#c52846;color:#fff}.reset-build{background:#e8dde6;color:#34283a}.builder-output{border:1.5px solid #d8c9d5;background:white;border-radius:16px;padding:20px;white-space:pre-wrap;line-height:1.8;font-size:16px;max-height:530px;overflow:auto;overflow-wrap:anywhere}.builder-note{font-size:15px;color:#614e63;margin-top:12px!important}.builder .pill{display:inline-block;background:#f5e7ef;color:#743e5d;border-radius:8px;padding:3px 10px;font-size:14px;font-weight:850}.builder-toggle{display:flex;flex-wrap:wrap;gap:10px}.builder-toggle label{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #dec8d5;padding:8px 12px;border-radius:12px;font-weight:700}.builder-toggle input{width:20px;height:20px;accent-color:#b95583}
@@ -140,15 +141,16 @@ body{background:linear-gradient(180deg,#fbf6fa 0%,#f8f7fb 55%,#fff9fa 100%);lett
 </section>
 <section aria-labelledby="character-sheet-title" class="character-section" id="character-sheet">
 <span class="character-kicker">CHARACTER STUDIO · STEP 02</span><h2 id="character-sheet-title">🧩 6컷 캐릭터 시트 만들기</h2>
-<p>위에서 만든 <strong>캐릭터 이미지 한 장을 AI 채팅에 첨부</strong>하고 아래 프롬프트를 붙여넣으세요. 의상·가방·액세서리 설정을 바꾸면 시트 프롬프트도 즉시 변경됩니다.</p>
+<p>위에서 만든 <strong>캐릭터 이미지 한 장을 AI 채팅에 첨부</strong>하고 아래 프롬프트를 붙여넣으세요. 처음 만든 캐릭터의 옷을 유지하고 싶다면 <strong>‘원본 캐릭터 옷 스타일 그대로 유지’</strong>를 선택하세요. 의상·가방·액세서리 설정을 바꾸면 시트 프롬프트도 즉시 변경됩니다.</p>
 <div class="character-help"><strong>첨부 순서</strong> ① 1단계 캐릭터 이미지 생성·저장 → ② ChatGPT/Gemini 등 사용 가능한 이미지 도구에 캐릭터 그림 첨부 → ③ 2단계 프롬프트 복사·붙여넣기. 학생의 실제 얼굴 사진은 첨부하지 않습니다.</div>
+<div class="character-help"><strong>원본 의상 유지 팁</strong> · ① 옷 스타일에서 ‘원본 캐릭터 옷 스타일 그대로 유지’를 선택하면 교복 세부 스타일과 의상 색상도 원본 유지로 자동 선택됩니다. ② 원본에 상반신만 보인다면 하의와 신발은 상의에 어울리게 자연스럽게 완성합니다. ③ 처음 만든 캐릭터 이미지를 꼭 첨부하세요.</div>
 <div class="character-grid">
-<div class="character-field"><label for="sh-outfit">① 옷 스타일</label><select id="sh-outfit"><option>단정한 캐주얼</option><option>학교생활을 위한 편안한 교복 스타일</option><option>뷰티아트 실습용 앞치마 스타일</option><option>트렌디한 스트리트 캐주얼</option><option>미니멀한 셔츠·슬랙스</option><option>파스텔 가디건·스커트</option></select></div>
-<div class="character-field"><label for="sh-uniform">② 교복 세부 스타일</label><select id="sh-uniform"><option>교복 아님 / 해당 없음</option><option>네이비 블레이저·흰 셔츠·체크 하의</option><option>그레이 조끼·흰 셔츠·단정한 하의</option><option>베이지 가디건·흰 셔츠·단정한 하의</option><option>심플한 체육복 스타일</option></select></div>
+<div class="character-field"><label for="sh-outfit">① 옷 스타일</label><select id="sh-outfit"><option>단정한 캐주얼</option><option>원본 캐릭터 옷 스타일 그대로 유지</option><option>학교생활을 위한 편안한 교복 스타일</option><option>뷰티아트 실습용 앞치마 스타일</option><option>트렌디한 스트리트 캐주얼</option><option>미니멀한 셔츠·슬랙스</option><option>파스텔 가디건·스커트</option></select></div>
+<div class="character-field"><label for="sh-uniform">② 교복 세부 스타일</label><select id="sh-uniform"><option>교복 아님 / 해당 없음</option><option>원본 캐릭터 옷 스타일 그대로 유지</option><option>네이비 블레이저·흰 셔츠·체크 하의</option><option>그레이 조끼·흰 셔츠·단정한 하의</option><option>베이지 가디건·흰 셔츠·단정한 하의</option><option>심플한 체육복 스타일</option></select></div>
 <div class="character-field"><label for="sh-bag">③ 가방</label><select id="sh-bag"><option>가방 없음</option><option>심플한 백팩</option><option>미니 크로스백</option><option>캔버스 에코백</option><option>뷰티 도구 파우치</option><option>단정한 숄더백</option></select></div>
 <div class="character-field"><label for="sh-props">④ 소품·액세서리</label><select id="sh-props"><option>추가 소품 없음</option><option>작은 헤어핀과 시계</option><option>심플한 목걸이</option><option>노트와 펜</option><option>메이크업 브러시 파우치(안전한 도구)</option><option>네일 컬러 샘플북</option></select></div>
 <div class="character-field"><label for="sh-shoes">⑤ 신발</label><select id="sh-shoes"><option>깔끔한 스니커즈</option><option>단정한 로퍼</option><option>심플한 플랫슈즈</option><option>캐주얼 캔버스화</option></select></div>
-<div class="character-field"><label for="sh-colors">⑥ 의상 색상</label><select id="sh-colors"><option>네이비·크림화이트</option><option>로즈핑크·아이보리</option><option>라벤더·그레이</option><option>세이지민트·베이지</option><option>블랙·화이트</option><option>스카이블루·화이트</option></select></div>
+<div class="character-field"><label for="sh-colors">⑥ 의상 색상</label><select id="sh-colors"><option>네이비·크림화이트</option><option>원본 캐릭터 옷 스타일 그대로 유지</option><option>로즈핑크·아이보리</option><option>라벤더·그레이</option><option>세이지민트·베이지</option><option>블랙·화이트</option><option>스카이블루·화이트</option></select></div>
 <div class="character-field"><label for="sh-expression">⑦ 표정</label><select id="sh-expression"><option>자연스럽고 은은한 미소</option><option>밝고 자신감 있는 미소</option><option>차분하고 따뜻한 미소</option></select></div>
 <div class="character-field"><label for="sh-background">⑧ 시트 배경</label><select id="sh-background"><option>깔끔한 흰색 스튜디오 배경</option><option>아주 연한 크림화이트 스튜디오 배경</option><option>연한 라이트그레이 스튜디오 배경</option></select></div>
 <div class="character-field wide"><label for="sh-extra">⑨ 추가 의상·소품 설명 (선택)</label><input id="sh-extra" maxlength="180" placeholder="예: 소매에 작은 핑크 포인트, 소지품은 한쪽 어깨에만"/></div>
@@ -157,26 +159,41 @@ body{background:linear-gradient(180deg,#fbf6fa 0%,#f8f7fb 55%,#fff9fa 100%);lett
 <div aria-live="polite" class="character-preview" id="sh-prompt" tabindex="0"></div>
 <div class="character-actions"><button class="character-copy" id="sh-copy" type="button">📋 캐릭터 시트 프롬프트 한 번에 복사</button><button class="character-reset" id="sh-reset" type="button">↺ 선택 초기화</button></div><div class="character-status" id="sh-status" role="status"></div>
 </section>
-<section aria-labelledby="builder-title" class="builder" id="custom-builder"><span class="pill">NEW · 직접 선택하는 AI 실습</span><h2 id="builder-title">🖼️ 3단계 포스터 · 4단계 카드뉴스 만들기</h2><p>아래에서 내 이야기를 선택하거나 입력하고 <strong>전체 프롬프트 생성</strong>을 누르세요. 학생마다 다른 완성형 프롬프트가 만들어집니다.</p>
+<section aria-labelledby="builder-title" class="builder" id="custom-builder"><span class="pill">NEW · 직접 선택하는 AI 실습</span><h2 id="builder-title">🖼️ 3단계 포스터 · 4단계 카드뉴스 만들기</h2><p>먼저 <strong>3:4 포스터</strong> 또는 <strong>1:1 카드뉴스 4장</strong>을 선택하세요. 콘텐츠마다 전용 입력 항목과 프롬프트가 표시됩니다. 앞에서 만든 캐릭터 이미지를 AI 채팅에 첨부해 활용하세요.</p>
 <div aria-label="제작 콘텐츠 선택" class="kind" role="group"><label><input checked="" name="build-kind" type="radio" value="poster"/> 3:4 포스터</label><label><input name="build-kind" type="radio" value="cards"/> 1:1 카드뉴스 4장</label></div>
-<div class="builder-grid">
-<div class="builder-field"><label for="b-field">① 나의 뷰티 분야</label><select id="b-field"><option>헤어 디자인</option><option>메이크업</option><option>네일아트</option><option>피부미용·위생 관리</option><option>뷰티 콘텐츠 기획</option></select></div>
-<div class="builder-field"><label for="b-theme">② 콘텐츠 주제</label><select id="b-theme"><option>나의 강점 소개</option><option>수업 실습 경험 소개</option><option>나의 뷰티 성장 과정</option><option>미래의 나와 진로 목표</option><option>내가 좋아하는 뷰티 스타일</option></select></div>
-<div class="builder-field"><label for="b-strength1">③ 나의 강점 1</label><select id="b-strength1"><option>꼼꼼함</option><option>창의성</option><option>관찰력</option><option>꾸준함</option><option>색감 감각</option><option>소통 능력</option><option>협업 능력</option><option>문제 해결력</option></select></div>
-<div class="builder-field"><label for="b-strength2">④ 나의 강점 2</label><select id="b-strength2"><option>꾸준함</option><option>꼼꼼함</option><option>창의성</option><option>관찰력</option><option>색감 감각</option><option>소통 능력</option><option>협업 능력</option><option>문제 해결력</option></select></div>
-<div class="builder-field"><label for="b-strength3">⑤ 나의 강점 3</label><select id="b-strength3"><option>소통 능력</option><option>꼼꼼함</option><option>창의성</option><option>관찰력</option><option>꾸준함</option><option>색감 감각</option><option>협업 능력</option><option>문제 해결력</option></select></div>
-<div class="builder-field"><label for="b-style">⑥ 디자인 분위기</label><select id="b-style"><option>깔끔하고 세련된 에디토리얼</option><option>사랑스러운 파스텔 감성</option><option>차분하고 전문적인 포트폴리오</option><option>밝고 발랄한 청소년 감성</option><option>심플한 미니멀 디자인</option></select></div>
-<div class="builder-field"><label for="b-color">⑦ 대표 색상</label><select id="b-color"><option>로즈핑크 · 크림화이트</option><option>라벤더 · 화이트</option><option>스카이블루 · 화이트</option><option>민트 · 아이보리</option><option>네이비 · 골드</option><option>베이지 · 브라운</option></select></div>
-<div class="builder-field"><label for="b-audience">⑧ 보여주고 싶은 대상</label><select id="b-audience"><option>같은 학년 친구들</option><option>뷰티를 처음 배우는 사람</option><option>진로 포트폴리오를 보는 선생님</option><option>나의 성장을 응원하는 사람들</option></select></div>
-<div class="builder-field"><label for="b-visual">⑨ 이미지에 넣을 소재</label><select id="b-visual"><option>내가 만든 캐릭터 첨부</option><option>내가 만든 캐릭터 이미지 첨부(실제 얼굴 사진 제외)</option><option>실습 작품 사진 첨부(권리 확인)</option><option>사진 없이 뷰티 도구·심벌 일러스트</option></select></div>
-<div class="builder-field"><label for="b-tone">⑩ 글의 분위기</label><select id="b-tone"><option>학생답고 자연스러운 말투</option><option>밝고 자신감 있는 말투</option><option>차분하고 진정성 있는 말투</option><option>친절하고 쉽게 설명하는 말투</option></select></div>
-<div class="builder-example-guide"><strong>💡 학생용 입력 예시</strong><div>실습 경험: “네일팁에 봄 컬러 3가지를 칠하고 비교했어요.”</div><div>나의 목표: “매주 작품을 기록하는 예비 네일 디자이너”</div><div>강점 선택 예: 꼼꼼함 · 꾸준함 · 색감 감각</div><div>이미지 선택 예: 내가 직접 만든 캐릭터 또는 동의를 확인한 본인 사진</div><div>선택한 예시는 참고용이며, 실제 자신의 경험에 맞게 바꿔 입력하세요.</div></div><div class="builder-field builder-wide"><label for="b-experience">⑪ 내가 실제로 해 본 실습 · 기억에 남는 경험</label><textarea id="b-experience" maxlength="500" placeholder="예: 네일팁에 색을 여러 번 조합해 보고 친구 의견을 받아 수정했어요."></textarea></div>
-<div class="builder-field builder-wide"><label for="b-goal">⑫ 소개하고 싶은 나의 목표·브랜드 제목 (선택)</label><input id="b-goal" maxlength="120" placeholder="예: 매일 연습하며 성장하는 예비 네일 디자이너"/></div>
+<div class="builder-grid" id="poster-fields" aria-label="포스터 전용 설정">
+<div class="builder-field"><label for="p-field">① 뷰티 분야</label><select id="p-field"><option>헤어 디자인</option><option>메이크업</option><option>네일아트</option><option>피부미용·위생 관리</option><option>뷰티 콘텐츠 기획</option></select></div>
+<div class="builder-field"><label for="p-purpose">② 포스터 제작 목적</label><select id="p-purpose"><option>나만의 뷰티 브랜드 소개</option><option>내 실습 작품 홍보</option><option>나의 진로 목표 알리기</option><option>수업에서 배운 기술 소개</option><option>내 강점 한눈에 보여주기</option></select></div>
+<div class="builder-field"><label for="p-headline">③ 포스터 핵심 메시지</label><select id="p-headline"><option>나의 가능성을 보여주는 한 문장</option><option>작은 연습이 만드는 큰 성장</option><option>내 손끝에서 시작되는 뷰티 이야기</option><option>내가 좋아하는 뷰티를 소개합니다</option><option>미래를 준비하는 예비 뷰티 아티스트</option></select></div>
+<div class="builder-field"><label for="p-focus">④ 가장 강조할 요소</label><select id="p-focus"><option>캐릭터 얼굴과 브랜드 제목</option><option>뷰티 실습 작품과 짧은 설명</option><option>강점 키워드 3개</option><option>나의 진로 목표</option><option>뷰티 도구와 감각적인 타이포그래피</option></select></div>
+<div class="builder-field"><label for="p-layout">⑤ 세로 포스터 레이아웃</label><select id="p-layout"><option>상단 큰 제목 + 중앙 캐릭터 + 하단 설명</option><option>중앙 캐릭터 중심 + 주변 키워드</option><option>상단 대표 이미지 + 하단 소개문</option><option>큰 타이포그래피 + 작은 인물 이미지</option></select></div>
+<div class="builder-field"><label for="p-mood">⑥ 디자인 분위기</label><select id="p-mood"><option>세련된 뷰티 매거진</option><option>사랑스러운 파스텔 감성</option><option>발랄한 청소년 브랜드</option><option>심플한 포트폴리오 스타일</option><option>미니멀 프리미엄 브랜드</option></select></div>
+<div class="builder-field"><label for="p-color">⑦ 포스터 대표 색상</label><select id="p-color"><option>로즈핑크 · 크림화이트</option><option>라벤더 · 화이트</option><option>민트 · 아이보리</option><option>네이비 · 골드</option><option>피치 · 베이지</option></select></div>
+<div class="builder-field"><label for="p-image">⑧ 대표 이미지</label><select id="p-image"><option>앞에서 만든 AI 캐릭터 이미지 첨부</option><option>6컷 캐릭터 시트 참고 이미지 첨부</option><option>권리를 가진 나의 실습 작품 사진 첨부</option><option>인물 없이 뷰티 도구 일러스트</option></select></div>
+<div class="builder-field wide"><label for="p-experience">⑨ 실제 실습 경험 또는 소개할 내용</label><textarea id="p-experience" maxlength="400" placeholder="예: 네일팁에 봄 컬러를 조합해 보고 수정했어요."></textarea></div>
+<div class="builder-field wide"><label for="p-title">⑩ 포스터에 넣을 브랜드 제목 (선택)</label><input id="p-title" maxlength="70" placeholder="예: 매일 성장하는 예비 네일 디자이너"></div>
+<div class="builder-field wide"><label for="p-cta">⑪ 하단에 넣을 마무리 문구</label><select id="p-cta"><option>오늘의 연습이 내일의 실력이 됩니다</option><option>나의 뷰티 성장 기록을 응원해 주세요</option><option>배우고 도전하며 계속 성장합니다</option><option>내가 좋아하는 뷰티를 꾸준히 탐구합니다</option></select></div>
+</div>
+<div class="builder-grid" id="cards-fields" aria-label="카드뉴스 전용 설정" hidden>
+<div class="builder-field"><label for="c-field">① 카드뉴스 뷰티 분야</label><select id="c-field"><option>헤어 디자인</option><option>메이크업</option><option>네일아트</option><option>피부미용·위생 관리</option><option>뷰티 콘텐츠 기획</option></select></div>
+<div class="builder-field"><label for="c-topic">② 카드뉴스 이야기 주제</label><select id="c-topic"><option>나의 강점 3개 소개</option><option>뷰티 실습 과정 4단계</option><option>수업에서 배우고 성장한 이야기</option><option>내가 좋아하는 뷰티 스타일 탐구</option><option>미래 진로를 준비하는 나의 계획</option></select></div>
+<div class="builder-field"><label for="c-audience">③ 카드뉴스를 보여줄 대상</label><select id="c-audience"><option>같은 학년 친구들</option><option>뷰티를 처음 배우는 학생</option><option>나의 포트폴리오를 보는 선생님</option><option>나의 성장을 응원하는 사람들</option></select></div>
+<div class="builder-field"><label for="c-flow">④ 4장 이야기 구성 방식</label><select id="c-flow"><option>소개 → 강점 → 실습 경험 → 목표</option><option>관심을 갖게 된 계기 → 도전 → 배운 점 → 미래</option><option>문제 발견 → 연습 과정 → 변화 → 다음 목표</option><option>주제 소개 → 핵심 정보 → 사례 → 요약</option></select></div>
+<div class="builder-field"><label for="c-page1">⑤ 1장 표지 스타일</label><select id="c-page1"><option>캐릭터와 큰 제목</option><option>강렬한 한 줄 질문과 아이콘</option><option>뷰티 도구와 짧은 제목</option><option>작품 이미지와 타이틀</option></select></div>
+<div class="builder-field"><label for="c-density">⑥ 각 장의 글자 분량</label><select id="c-density"><option>매우 간결하게 · 제목 + 1~2문장</option><option>적당하게 · 제목 + 핵심 3가지</option><option>설명형 · 제목 + 짧은 문단</option></select></div>
+<div class="builder-field"><label for="c-strength1">⑦ 강조할 강점 1</label><select id="c-strength1"><option>꼼꼼함</option><option>창의성</option><option>꾸준함</option><option>관찰력</option><option>색감 감각</option><option>소통 능력</option></select></div>
+<div class="builder-field"><label for="c-strength2">⑧ 강조할 강점 2</label><select id="c-strength2"><option>꾸준함</option><option>꼼꼼함</option><option>창의성</option><option>협업 능력</option><option>문제 해결력</option><option>색감 감각</option></select></div>
+<div class="builder-field"><label for="c-look">⑨ 전체 카드뉴스 디자인</label><select id="c-look"><option>파스텔 뷰티 에디토리얼</option><option>깔끔한 교육용 인포그래픽</option><option>발랄한 웹툰형 스토리</option><option>차분한 포트폴리오 톤</option></select></div>
+<div class="builder-field"><label for="c-color">⑩ 공통 색상</label><select id="c-color"><option>로즈핑크 · 크림화이트</option><option>라벤더 · 화이트</option><option>민트 · 아이보리</option><option>스카이블루 · 화이트</option><option>베이지 · 브라운</option></select></div>
+<div class="builder-field"><label for="c-image">⑪ 4장 공통 이미지 소재</label><select id="c-image"><option>앞에서 만든 AI 캐릭터 이미지 첨부</option><option>6컷 캐릭터 시트 참고 이미지 첨부</option><option>권리를 가진 나의 실습 작품 사진 첨부</option><option>인물 없이 뷰티 도구 일러스트</option></select></div>
+<div class="builder-field"><label for="c-ending">⑫ 마지막 장 마무리 방식</label><select id="c-ending"><option>나의 다음 실습 목표</option><option>친구들에게 전하는 응원 한마디</option><option>오늘 배운 점 한 문장 요약</option><option>미래의 나에게 보내는 다짐</option></select></div>
+<div class="builder-field wide"><label for="c-experience">⑬ 실제 경험·장별 소재</label><textarea id="c-experience" maxlength="500" placeholder="예: 색 조합 연습 → 친구 피드백 → 수정 → 다음 목표. 실제 경험만 적어 주세요."></textarea></div>
+<div class="builder-field wide"><label for="c-title">⑭ 카드뉴스 시리즈 제목 (선택)</label><input id="c-title" maxlength="80" placeholder="예: 나의 네일아트 성장 이야기"></div>
 </div>
 <div class="builder-button-row"><button class="build-action" id="build-now" type="button">✨ 전체 프롬프트 생성</button><button class="copy-build" disabled="" id="build-copy" type="button">프롬프트 복사</button><button class="reset-build" id="build-reset" type="button">선택 초기화</button></div>
 <div aria-live="polite" class="builder-note" id="builder-status" role="status">값을 선택한 뒤 ‘전체 프롬프트 생성’을 눌러 주세요.</div><div class="builder-output" id="build-result" tabindex="0">여기에 나만의 완성형 프롬프트가 표시됩니다.</div>
 <p class="builder-note"><strong>카드뉴스 제작 방법:</strong> 생성한 프롬프트를 ChatGPT 또는 Gemini에 붙여넣고, 기획을 확인한 후 1장씩 요청하세요. 각 장을 독립된 1:1 이미지로 만들고 개별 파일로 저장합니다. 한 화면에 4장을 합치지 않습니다.</p>
-<p class="builder-note">학생 본인의 얼굴 사진은 업로드가 선택이며 학교 규정과 보호자·학생 동의를 먼저 확인하세요. AI 생성 결과는 반드시 직접 검수하세요. 이 생성기는 웹페이지 안에서 문장을 조합하며 AI 서버에 정보를 전송하지 않습니다.</p></section><div class="searchline"><input aria-label="프롬프트 검색" id="search" placeholder="프롬프트 찾기: 강점, 포스터, 카드뉴스..." type="search"/><span class="count" id="count"></span></div><div class="tabs" id="tabs"></div><div id="cards"></div><section class="notice" id="card-guide"><h2>✨ 4장 카드뉴스, 이렇게 만드세요</h2><p><strong>21~23번</strong>으로 강점을 발견하고 캐릭터·사진 스타일을 정한 다음, <strong>24번 공통 지시문</strong>을 먼저 입력하세요.</p><p><strong>25~28번</strong>을 순서대로 실행해 <strong>한 번에 정사각형 이미지 1장씩</strong> 생성하고 다운로드하세요. 4장이 합쳐진 콜라주는 사용하지 않습니다.</p><p>저장 파일명: beauty_strength_01.png ~ beauty_strength_04.png</p></section><section aria-labelledby="survey-title" class="survey" id="satisfaction">
+<p class="builder-note">학생 본인의 얼굴 사진을 사용하지 않아도 되며 학교 규정과 보호자·학생 동의를 먼저 확인하세요. AI 생성 결과는 반드시 직접 검수하세요. 이 생성기는 웹페이지 안에서 문장을 조합하며 AI 서버에 정보를 전송하지 않습니다.</p></section><div class="searchline"><input aria-label="프롬프트 검색" id="search" placeholder="프롬프트 찾기: 강점, 포스터, 카드뉴스..." type="search"/><span class="count" id="count"></span></div><div class="tabs" id="tabs"></div><div id="cards"></div><section class="notice" id="card-guide"><h2>✨ 4장 카드뉴스, 이렇게 만드세요</h2><p><strong>21~23번</strong>으로 강점을 발견하고 캐릭터·사진 스타일을 정한 다음, <strong>24번 공통 지시문</strong>을 먼저 입력하세요.</p><p><strong>25~28번</strong>을 순서대로 실행해 <strong>한 번에 정사각형 이미지 1장씩</strong> 생성하고 다운로드하세요. 4장이 합쳐진 콜라주는 사용하지 않습니다.</p><p>저장 파일명: beauty_strength_01.png ~ beauty_strength_04.png</p></section><section aria-labelledby="survey-title" class="survey" id="satisfaction">
 <span class="pill">수업 마무리 · 선택형 후기</span><h2 id="survey-title">📝 강의 만족도 조사 &amp; 나의 수업 후기</h2>
 <p>나의 솔직한 생각을 선택하세요. 선택 결과를 바탕으로 <strong>자연스러운 1인칭 후기 문장</strong>을 만들 수 있습니다. 마음에 들지 않는 부분은 직접 고쳐 주세요.</p>
 <div class="survey-grid">
@@ -401,55 +418,78 @@ const safeBuilder=`[청소년 안전 기준 — 이미지·텍스트·캡션 모
 고등학교 2학년 수업과 진로 포트폴리오에 적합하게 표현해 주세요. 폭력·학대·혐오·괴롭힘·자해·불법행위·도박·베팅·사행성·술·담배·약물 홍보·음란물·선정성·성적 대상화는 제외하세요. 미성년자 인물은 단정한 복장과 자연스러운 자세로 표현하세요. 외모 비하·신체 수치심·과도한 외모 변화 압박·위험한 시술·허위 효능·없는 자격·경력·수상·후기·성과를 만들지 마세요. 실제 이름, 연락처, 주소, 학교 세부 정보 등 개인정보를 넣지 말고, 타인 사진·작품·상표를 동의 없이 사용하지 마세요. 부적절한 요청이나 사진 요소는 그대로 묘사하지 말고 안전한 대안으로 변경하세요. 공개 전에 학생 본인이 최종 확인할 수 있도록 알려 주세요.`;
 const bv=id=>document.getElementById(id).value.trim();
 const output=document.getElementById('build-result'), copyBtn=document.getElementById('build-copy'), status=document.getElementById('builder-status');
-function builderPrompt(){const kind=document.querySelector('input[name="build-kind"]:checked').value, field=bv('b-field'), theme=bv('b-theme'), strengths=[bv('b-strength1'),bv('b-strength2'),bv('b-strength3')], style=bv('b-style'),color=bv('b-color'),audience=bv('b-audience'), visual=bv('b-visual'),tone=bv('b-tone'),experience=bv('b-experience')||'아직 입력하지 않았습니다. 실제 수업 경험을 질문해서 확인하고, 지어내지 마세요.',goal=bv('b-goal')||'내가 직접 결정할 수 있도록 제목 후보 3개를 제안해 주세요.';
-const common=`너는 고등학교 2학년 뷰티아트과 학생의 퍼스널 브랜딩을 돕는 청소년 친화적 AI 콘텐츠 디자이너야. 아래 선택 내용만을 바탕으로 학생의 실제 배움과 강점을 소개하는 결과물을 만들어 줘.
+function builderPrompt(){
+ const kind=document.querySelector('input[name="build-kind"]:checked').value;
+ if(kind==='poster'){
+  const title=bv('p-title')||'선택한 주제에 맞는 브랜드 제목 후보를 먼저 제안해 주세요.';
+  return `너는 고등학교 2학년 뷰티아트과 학생을 위한 전문 포스터 아트디렉터야. 다음 설정을 바탕으로 **정확히 세로 3:4 포스터 이미지 1장**을 만들어 줘.
 
-[나의 선택]
-분야: ${field}
-콘텐츠 주제: ${theme}
-강점 3개: ${strengths.join(' · ')}
-대상: ${audience}
-디자인 분위기: ${style}
-대표 색상: ${color}
-글의 말투: ${tone}
-이미지 소재: ${visual}
-나의 실제 경험: ${experience}
-나의 목표/브랜드 제목: ${goal}
+[포스터 전용 선택 정보]
+뷰티 분야: ${bv('p-field')}
+제작 목적: ${bv('p-purpose')}
+핵심 메시지: ${bv('p-headline')}
+가장 강조할 요소: ${bv('p-focus')}
+세로 레이아웃: ${bv('p-layout')}
+디자인 분위기: ${bv('p-mood')}
+대표 색상: ${bv('p-color')}
+이미지 소재: ${bv('p-image')}
+실제 실습 경험: ${bv('p-experience')||'입력되지 않았음 — 실제 경험을 추측하지 말 것'}
+브랜드 제목: ${title}
+포스터 하단 문구: ${bv('p-cta')}
 
-[이미지 소스]
-${visual.includes('캐릭터')?'내가 제작한 원본 캐릭터 이미지를 직접 첨부할 예정이야. 이미지가 첨부되지 않았다면 먼저 첨부를 요청해. 인물 특징과 복장을 4장 내내 일관되게 유지해.':visual.includes('본인 사진')?'내 사진은 선택적으로 첨부할 예정이야. 사진이 없다면 얼굴을 임의로 추측하거나 만들어 나의 실제 사진이라고 주장하지 말고, 안전한 일반 일러스트 대안을 제안해. 학교 규정과 촬영·업로드 동의를 확인해.':visual.includes('작품')?'내가 권리를 가진 실제 실습 작품을 첨부할 예정이야. 없으면 없는 작품을 실제 결과로 꾸미지 말고 설명용 일러스트를 사용해.':'개인 얼굴·타인 사진 없이 안전한 뷰티 도구, 손그림, 추상 그래픽, 아이콘 중심으로 구성해.'}
-
-`;
-if(kind==='poster')return common+`[요청: 퍼스널 브랜딩 포스터 1장]
-1. 위 입력을 바탕으로 3:4 세로 포스터용 핵심 메시지를 정리해 줘. 없는 경험은 추가하지 마.
-2. 상단 큰 브랜드 제목 1개(12~15자 안팎), 학생다운 자기소개 2~3문장, 실제 경험을 반영한 강점 키워드 3개, 하단 성장 목표 1문장으로 구성해.
-3. 대표 이미지 1개, 충분한 여백, 강한 글자 대비, 스마트폰에서도 읽히는 큰 한글로 디자인해.
-4. 실제로 이미지를 생성할 수 있는 기능이 있다면 **3:4 독립 이미지 1장만** 생성해. 사용할 수 없다면 이미지 생성 도구에 바로 입력할 수 있는 완성형 이미지 프롬프트를 추가해 줘.
-5. 생성된 이미지의 한글 철자와 강점, 출처와 동의 여부를 점검하도록 안내해. 파일명 beauty_brand_poster_01.png로 개별 저장할 수 있게 안내해.
+[포스터 제작 지시]
+1. **단 한 장의 세로 3:4 포스터**만 만든다. 카드뉴스, 콜라주, 여러 장 묶음은 만들지 않는다.
+2. 맨 위에 크고 명확한 한글 브랜드 제목, 중앙에 대표 이미지 1개, 아래에 실제 경험을 바탕으로 한 간단한 소개와 마무리 문구를 배치한다. 지정한 레이아웃을 우선한다.
+3. 한 화면에 핵심 메시지가 바로 보이게 한다. 제목은 굵고 크게, 본문은 최대 2~3문장으로 짧게, 색 대비와 여백은 충분히 둔다.
+4. 캐릭터 또는 캐릭터 시트 첨부를 선택했다면 실제 첨부된 원본을 참고하여 얼굴·헤어·의상 등 동일한 캐릭터 정체성을 유지한다. 첨부가 없으면 먼저 업로드를 요청하고 가상의 실제 얼굴을 추측하지 않는다.
+5. 학생이 제공하지 않은 경력·성과·실습 사실을 꾸미지 않는다. 오탈자, 이미지 오류, 개인정보, 저작권 문제를 점검한다.
+6. 이미지 생성 기능이 있으면 이미지를 바로 1장 생성한다. 기능이 없으면 동일한 결과를 얻도록 완성형 이미지 생성 프롬프트를 제공한다. 파일명은 beauty_brand_poster_01.png를 권장한다.
 
 ${safeBuilder}`;
-return common+`[요청: 나의 강점을 소개하는 카드뉴스 4장]
-먼저 4장 카드뉴스의 텍스트 구성안을 작성해 줘. 표지와 본문 문구는 짧고 정확한 한국어를 써.
-① 1장: 브랜드 제목 + 나의 관심 뷰티 분야 + 나를 소개하는 한 문장
-② 2장: 강점 1·2와 각각을 보여주는 실제 행동 (사실 확인된 것만)
-③ 3장: 강점 3 + 내가 실제로 해 본 뷰티 실습 경험과 배운 점
-④ 4장: 앞으로의 목표 + 나다운 마무리 메시지
+ }
+ const seriesTitle=bv('c-title')||'주제에 맞는 짧은 시리즈 제목 3개를 제안한 뒤 한 개를 사용해 줘.';
+ return `너는 고등학교 2학년 뷰티아트과 학생의 4장 카드뉴스 제작을 돕는 스토리텔링 기획자이자 인포그래픽 디자이너야. 아래 설정으로 **서로 연결되는 정사각형 1:1 카드뉴스 4장**을 기획·제작해 줘.
 
-[이미지 생성 규칙 — 매우 중요]
-- **4장 전체를 하나의 콜라주, 2×2 격자, 4분할 화면, 포스터 한 장으로 합치지 마.**
-- 각 페이지는 **정확히 1:1 정사각형 이미지 하나**로 독립 생성해. 4장은 같은 색상·폰트·캐릭터·디자인을 유지해.
-- 구성안을 먼저 제시한 다음, **1장만 생성하고 멈춰.** 학생이 '2장 만들어줘'라고 입력하면 2장 이미지 한 장만 생성하고, 같은 방식으로 3장·4장을 진행해.
-- 페이지별 생성마다 해당 페이지의 고유 내용만 포함하고, 다른 페이지를 작게 넣거나 다음 페이지를 미리 합쳐 넣지 마.
-- 장별 파일명: beauty_strength_01.png, beauty_strength_02.png, beauty_strength_03.png, beauty_strength_04.png.
-- 한 장을 생성할 때마다 학생이 그 이미지를 **개별 다운로드/저장**할 수 있도록 안내해. 도구의 다운로드 기능이 지원되지 않으면 학생이 직접 이미지를 열고 저장할 수 있는 방법을 안내해. 파일을 저장했다고 거짓으로 말하지 마.
-- 이미지 생성 기능이 없다면 각 장마다 독립된 이미지 생성 프롬프트를 작성해 학생이 도구에서 한 장씩 제작하게 해.
-- 한글 오탈자와 이미지 오류를 확인하고 수정 요청할 수 있게 해.
+[카드뉴스 전용 선택 정보]
+뷰티 분야: ${bv('c-field')}
+이야기 주제: ${bv('c-topic')}
+독자: ${bv('c-audience')}
+4장 이야기 흐름: ${bv('c-flow')}
+1장 표지 스타일: ${bv('c-page1')}
+한 장당 글 분량: ${bv('c-density')}
+선택한 강점: ${bv('c-strength1')} · ${bv('c-strength2')}
+공통 디자인: ${bv('c-look')}
+공통 색상: ${bv('c-color')}
+이미지 소재: ${bv('c-image')}
+4장 마무리 방식: ${bv('c-ending')}
+실제 경험 및 단계별 내용: ${bv('c-experience')||'미입력 — 실제 경험이나 실습 과정을 임의로 만들지 말 것'}
+시리즈 제목: ${seriesTitle}
+
+[4장 카드뉴스 전용 제작 지시]
+1. 먼저 **1~4장 각각의 제목·핵심 메시지·이미지 구도·짧은 본문**이 있는 구성안을 작성한다. 선택한 4장 이야기 흐름과 주제를 우선하고, 사실이 부족하면 확인 질문을 한다.
+2. 1장은 흥미로운 표지, 2장은 첫 번째 핵심 내용, 3장은 과정·실습·배운 점 등 두 번째 핵심 내용, 4장은 요약과 다음 목표를 담는다. 선택한 이야기 구성 방식에 따라 자연스럽게 조정한다.
+3. 각 장은 **정확히 1:1 정사각형 독립 이미지 1장**이다. 4장 전체를 한 화면에 합치거나, 2×2 격자·콜라주·3:4 포스터로 만들지 않는다.
+4. 네 장의 색감·글꼴·캐릭터·시각 규칙을 통일하되, 각 장의 문장과 구도는 내용에 맞게 다르게 한다. 글자는 모바일에서 읽기 쉽게 한다.
+5. 캐릭터 또는 6컷 캐릭터 시트를 선택했다면 첨부된 원본 캐릭터의 얼굴·머리·의상 특징을 모든 장에서 일관되게 유지한다. 실제 첨부가 없다면 먼저 요청한다.
+6. **구성안을 먼저 보여준 다음 1장만 생성하고 멈춘다.** 학생이 '2장 만들어줘'라고 하면 2장 한 장만 만드는 방식으로 4장까지 진행한다. 이미지 생성 기능이 없다면 장별 완성형 이미지 생성 프롬프트를 작성한다.
+7. 각 장을 별도로 저장하도록 안내한다. 권장 파일명은 beauty_strength_01.png, beauty_strength_02.png, beauty_strength_03.png, beauty_strength_04.png다. 저장했다고 임의로 말하지 않는다.
+8. 실제 경험·작품·자격증·후기 등을 지어내지 않고, 오탈자·개인정보·저작권을 학생이 최종 확인하도록 한다.
 
 ${safeBuilder}`;
 }
+function updateBuilderMode(){
+ const kind=document.querySelector('input[name="build-kind"]:checked').value;
+ document.getElementById('poster-fields').hidden=kind!=='poster';
+ document.getElementById('cards-fields').hidden=kind!=='cards';
+ output.textContent='여기에 '+(kind==='poster'?'3:4 포스터':'1:1 카드뉴스 4장')+' 전용 프롬프트가 표시됩니다.';
+ copyBtn.disabled=true;copyBtn.textContent='프롬프트 복사';copyBtn.classList.remove('done');
+ status.textContent=kind==='poster'?'포스터 전용 항목을 선택한 뒤 프롬프트를 생성하세요.':'카드뉴스 전용 항목을 선택한 뒤 프롬프트를 생성하세요.';
+}
+document.querySelectorAll('input[name="build-kind"]').forEach(el=>el.addEventListener('change',updateBuilderMode));
 document.getElementById('build-now').addEventListener('click',()=>{output.textContent=builderPrompt().replace('\n\n'+safeBuilder,'');copyBtn.disabled=false;copyBtn.textContent='프롬프트 복사';copyBtn.classList.remove('done');status.textContent='완성형 프롬프트가 생성되었습니다. 화면에는 핵심 내용만 보이며, 복사할 때 안전 기준이 자동 포함됩니다.';output.scrollIntoView({behavior:'smooth',block:'nearest'});});
 copyBtn.addEventListener('click',async()=>{try{const val=output.textContent+'\n\n'+safeBuilder;if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(val)}else{const t=document.createElement('textarea');t.value=val;t.style.cssText='position:fixed;left:-9999px';document.body.append(t);t.select();const ok=document.execCommand('copy');t.remove();if(!ok)throw Error('copy failed')}copyBtn.textContent='프롬프트 복사완료';copyBtn.classList.add('done');status.textContent='복사되었습니다. ChatGPT 또는 Gemini에 붙여넣어 실습해 보세요.'}catch(e){status.textContent='복사할 수 없습니다. 아래 완성형 프롬프트를 직접 선택해 복사하거나 HTTPS로 접속하세요.';}});
-document.getElementById('build-reset').addEventListener('click',()=>{document.querySelectorAll('#custom-builder select').forEach(e=>e.selectedIndex=0);document.querySelectorAll('#custom-builder textarea,#custom-builder input[type="text"]').forEach(e=>e.value='');document.getElementById('b-goal').value='';document.querySelector('input[value="poster"]').checked=true;output.textContent='여기에 나만의 완성형 프롬프트가 표시됩니다.';copyBtn.disabled=true;copyBtn.classList.remove('done');copyBtn.textContent='프롬프트 복사';status.textContent='선택을 초기화했습니다.'});
+document.getElementById('build-reset').addEventListener('click',()=>{document.querySelectorAll('#custom-builder select').forEach(e=>e.selectedIndex=0);document.querySelectorAll('#custom-builder textarea,#custom-builder input:not([type=radio])').forEach(e=>e.value='');updateBuilderMode();status.textContent='현재 선택한 제작 유형의 입력 항목을 초기화했습니다.';});
+updateBuilderMode();
 </script><script>
 (function(){
  const val=id=>document.getElementById(id).value.trim();
@@ -514,6 +554,18 @@ ${sheetSafety}
 }
 function sheetText(){
 const extra=val('sh-extra');
+const keepOriginal='원본 캐릭터 옷 스타일 그대로 유지';
+const keepOutfit=val('sh-outfit')===keepOriginal;
+const keepUniform=val('sh-uniform')===keepOriginal;
+const keepColors=val('sh-colors')===keepOriginal;
+const outfitRules=keepOutfit?`[원본 캐릭터 의상 우선 규칙 — 가장 중요]
+- 첨부한 원본 캐릭터의 상반신 의상 디자인, 옷 종류, 색상, 패턴, 소재, 소매와 목선, 장식 등 눈에 보이는 특징을 6컷 모두에서 최대한 그대로 유지해.
+- 원본 이미지에 교복이 없다면 교복이나 블레이저를 임의로 추가하지 마. 옷 스타일을 다른 의상으로 바꾸거나 원본 색을 변경하지 마.
+- 원본에 보이지 않는 하의·뒷면만 상의와 자연스럽고 단정하게 어울리도록 합리적으로 이어서 디자인해. 보이지 않는 옷의 세부 사항을 원본에 존재했던 사실인 것처럼 단정하지 마.
+- 가방, 소품, 신발 등 다른 학생 선택은 원본 의상과 충돌하지 않는 범위에서만 반영해.`:`[의상 설정 적용 원칙]
+- 의상 스타일은 학생이 선택한 설정을 따르되, 교복 디테일이 '원본 캐릭터 옷 스타일 그대로 유지'이면 원본에 나타난 교복 요소만 유지하고 교복을 새로 만들지 마.
+- 의상 컬러가 '원본 캐릭터 옷 스타일 그대로 유지'이면 첨부된 원본 상의의 실제 색상과 배색을 그대로 따르고 새 색을 덧씌우지 마.
+- 원본 캐릭터의 상반신만 보이면 새로 필요한 하의와 뒷모습을 의상 스타일에 어울리게 구성해.`;
 return `# [중요] 첨부한 오리지널 캐릭터 이미지를 마스터 레퍼런스로 사용한 6컷 캐릭터 시트 제작
 
 이미 첨부한 그림은 **실제 학생 얼굴 사진이 아닌, AI로 제작한 가상 청소년 캐릭터 이미지**야. 첨부된 캐릭터가 없다면 먼저 이미지를 첨부해 달라고 요청하고, 없는 캐릭터를 임의로 생성해 시트를 완성했다고 말하지 마.
@@ -530,11 +582,13 @@ return `# [중요] 첨부한 오리지널 캐릭터 이미지를 마스터 레�
 추가 요청: ${extra||'없음'}
 ※ 교복 디테일이 '해당 없음'이면 교복을 강제로 추가하지 말 것. 교복 스타일을 선택했다면 특정 실존 학교 교복과 학교 로고는 재현하지 말 것.
 
+${outfitRules}
+
 ## 1. 고정해야 할 특징 (Master Reference)
 - **얼굴:** 첨부 캐릭터의 눈·코·입·얼굴 윤곽·피부 톤·원래 캐릭터의 개성과 그림 스타일을 모든 컷에서 최대한 동일하게 유지.
 - **헤어:** 첨부 캐릭터의 머리 모양과 머리 색, 앞머리, 안경 유무는 모든 컷에서 일관되게 유지.
 - **스타일:** 첨부 이미지가 웹툰/수채화/3D 카툰/반실사라면 그 스타일을 그대로 유지. 실사 사진처럼 강제로 변경하지 말 것. 오리지널 캐릭터 특유의 자연스러운 질감 유지.
-- **복장:** 위에서 학생이 새로 고른 의상·색상·가방·액세서리·신발을 전체 6컷에 동일하게 적용. 원본 캐릭터의 상의와 충돌한다면 **새 의상 선택을 우선**하고 얼굴·헤어 특징을 보존.
+- **복장:** 원본 유지 선택 시 **원본 상의 디자인과 색상을 최우선**으로 보존하고 하의·뒷모습만 자연스럽게 보완. 그렇지 않으면 학생이 새로 고른 의상·색상·가방·액세서리·신발을 6컷에 일관되게 반영. 개별 항목의 원본 유지 선택도 존중할 것.
 - **표정:** 선택한 자연스러운 미소를 유지. 청소년다운 단정한 비율.
 
 ## 2. 전체 시트 레이아웃
@@ -577,6 +631,14 @@ btn.addEventListener('click',()=>copy(generator(),btn,status));
 document.getElementById(resetId).addEventListener('click',()=>{ids.forEach(id=>{const el=document.getElementById(id);if(el.tagName==='SELECT')el.selectedIndex=0;else el.value='';});refresh();status.textContent='기본 선택값으로 초기화되었습니다.';});
 refresh();
 }
+const outfitSelect=document.getElementById('sh-outfit');
+outfitSelect.addEventListener('change',()=>{
+ if(outfitSelect.value==='원본 캐릭터 옷 스타일 그대로 유지'){
+  document.getElementById('sh-uniform').value=outfitSelect.value;
+  document.getElementById('sh-colors').value=outfitSelect.value;
+  for(const id of ['sh-uniform','sh-colors'])document.getElementById(id).dispatchEvent(new Event('input',{bubbles:true}));
+ }
+});
 install(charIds,'ch-prompt','ch-copy','ch-reset','ch-status',characterText);
 install(sheetIds,'sh-prompt','sh-copy','sh-reset','sh-status',sheetText);
 })();
