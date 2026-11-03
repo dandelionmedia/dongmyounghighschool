@@ -112,6 +112,12 @@ body{background:linear-gradient(180deg,#fbf6fa 0%,#f8f7fb 55%,#fff9fa 100%);lett
 .character-step{display:inline-flex;padding:5px 11px;background:#f3e6f0;color:#823e69;border-radius:30px;font-size:13px;font-weight:850}
 @media(max-width:1050px){.side nav{gap:7px}.toc-entries{grid-template-columns:1fr 1fr;display:grid}}
 @media(max-width:650px){.character-section{padding:19px 15px}.character-grid{grid-template-columns:1fr}.character-field.wide{grid-column:auto}.character-actions button{width:100%}.toc-entries{grid-template-columns:1fr}.side h2{font-size:20px}}
+/* 13번: 직접 수정 가능한 긴 프롬프트 미리보기 */
+.shortform-edit-hint{margin:10px 28px 0;font-size:14px;color:#684c67;line-height:1.6}
+@media(max-width:600px){.shortform-edit-hint{margin:10px 16px 0}}
+.prompt-text.shortform-editor{display:block;width:calc(100% - 54px);height:460px;min-height:260px;max-height:65vh;resize:vertical;font-family:inherit;outline:none;tab-size:2}
+.prompt-text.shortform-editor:focus{border-color:#a34878;box-shadow:0 0 0 4px #a348781b}
+@media(max-width:600px){.prompt-text.shortform-editor{width:calc(100% - 30px);height:420px;max-height:65vh}}
 </style></head><body><header class="hero" id="top"><div class="top"><div class="brand">✦ 유쌤클래스 <span style="color:#eebfd5">AI BEAUTY LAB</span></div><small>AI콘텐츠마케팅연구소 · 김유성 강사</small></div><div class="hero-body"><span class="eyebrow">동명생활경영고등학교 · 뷰티아트과 2학년</span><h1>AI 활용 SNS 콘텐츠 기획<br/><em>및 퍼스널 브랜딩</em></h1><p>나의 강점을 발견하고, 내가 배운 뷰티 기술을 나만의 콘텐츠로 만들어 보세요. 프롬프트를 한 번에 복사해 AI에 붙여넣으면 됩니다.</p><div class="hero-stats"><span>2026년 11월 4일</span><span>실습 프롬프트 28개 + 맞춤 생성기</span><span>카드뉴스 4장 개별 생성</span><span>청소년 안전 기준 적용</span></div></div></header><div class="layout"><aside class="side"><h2>📚 상세 실습 목차</h2><p class="toc-help">① 캐릭터 → ② 캐릭터 시트 → ③ 포스터 → ④ 카드뉴스 순서로 실습합니다. 목차를 누르면 해당 단계로 이동합니다.</p><nav id="nav"></nav></aside><main class="main">
 <a aria-label="패들렛 스터디게시판 새 창 열기" class="padlet-banner" href="https://padlet.com/yu_ssam/90" rel="noopener noreferrer" target="_blank">
 <span class="label">📌 수업 자료 · 활동 공유 · 과제 제출</span>
@@ -344,7 +350,7 @@ function makeShortformExampleBox(x,preview,copyButton){
   const lab=el('label','example-input-label');lab.append(el('span','',title));
   const inp=el('input','example-input');inp.type='text';inp.value=state.values[i]||'';
   inp.placeholder='직접 입력 (선택)';inp.setAttribute('aria-label',title);
-  inp.oninput=()=>{state.values[i]=inp.value;update();};lab.append(inp);grid.append(lab);inputs.push(inp);
+  inp.oninput=()=>{state.values[i]=inp.value;delete state.editedPrompt;update();};lab.append(inp);grid.append(lab);inputs.push(inp);
  });
  const details=el('details','manual-edit');details.append(el('summary','','✏️ [    ] 빈칸에 나의 정보 직접 입력하기'),grid);box.append(details);
  const helper=el('div','example-helper');const another=el('button','example-shuffle','↻ 다른 학생 예시 적용');another.type='button';
@@ -355,19 +361,21 @@ function makeShortformExampleBox(x,preview,copyButton){
   const example=shortformExamples[idx];another.hidden=!state.checked;
   inputs.forEach((input,i)=>{input.placeholder=state.checked?'예시: '+example[i]:'직접 입력 (선택)';});
   const [base]=promptParts(x);
-  preview.textContent=base.replace(/\{\{([A-Z]+)\}\}/g,(whole,key)=>{
+  const generated=base.replace(/\{\{([A-Z]+)\}\}/g,(whole,key)=>{
    const i=shortformFields.findIndex(v=>v[0]===key);
    if(i<0)return whole;
    const custom=state.values[i]?.trim();
    const value=custom||(state.checked?example[i]:null);
    return value?'['+value+']':'[    ]';
   });
+  // 페이지 재렌더링 시 학생이 직접 고친 내용을 보존합니다.
+  preview.value=Object.prototype.hasOwnProperty.call(state,'editedPrompt')?state.editedPrompt:generated;
   mode.textContent=state.checked?'뷰티 전공 예시 적용 중':'기본 프롬프트';mode.classList.toggle('is-example',state.checked);box.classList.toggle('is-example',state.checked);
   copyButton.classList.remove('done');copyButton.textContent='프롬프트 복사';
  }
- toggle.onchange=()=>{if(toggle.checked){idx=(idx+1+Math.floor(Math.random()*(shortformExamples.length-1)))%shortformExamples.length;state.shortformIdx=idx;}update();};
- another.onclick=()=>{idx=(idx+1)%shortformExamples.length;state.shortformIdx=idx;update();};
- reset.onclick=()=>{toggle.checked=false;state.values=[];inputs.forEach(i=>i.value='');update();};
+ toggle.onchange=()=>{delete state.editedPrompt;if(toggle.checked){idx=(idx+1+Math.floor(Math.random()*(shortformExamples.length-1)))%shortformExamples.length;state.shortformIdx=idx;}update();};
+ another.onclick=()=>{delete state.editedPrompt;idx=(idx+1)%shortformExamples.length;state.shortformIdx=idx;update();};
+ reset.onclick=()=>{delete state.editedPrompt;toggle.checked=false;state.values=[];inputs.forEach(i=>i.value='');update();};
  update();return box;
 }
 function makeExampleBox(x,preview,copyButton){
@@ -427,7 +435,9 @@ function makeExampleBox(x,preview,copyButton){
  return box;
 }
 
-function render(){tabs.replaceChildren();groups.forEach(g=>{const b=el('button','tab'+(selected===g?' selected':''),g);b.type='button';b.onclick=()=>{selected=g;render();};tabs.append(b)});const visible=items.filter(x=>(selected==='전체'||x.group===selected)&&(!query||(x.title+' '+x.prompt).toLowerCase().includes(query)));count.textContent=visible.length+'개';cards.replaceChildren();let prev='';visible.forEach(x=>{if(x.group!==prev){let h=el('h2','grouphead',x.group);h.id='group-'+x.group.replace(/ /g,'-');cards.append(h);prev=x.group;}const c=el('article','prompt-card');c.id='prompt-'+x.id;const head=el('div','card-head');head.append(el('div','number','PROMPT '+String(x.id).padStart(2,'0')));head.append(el('h3','',x.title.replace(/^\d\d\s+/,'')));if(x.meta){const m=el('div','meta',x.meta.slice(0,3).join('  ·  '));head.append(m)}c.append(head);const previewHead=el('div','prompt-preview-head');previewHead.append(el('strong','','📄 실습 프롬프트 미리보기'),el('span','','복사할 때 안전 기준이 자동 포함됩니다.'));c.append(previewHead);const pre=el('div','prompt-text',promptParts(x)[0].trim());c.append(pre);const actions=el('div','card-actions');const b=el('button','copy','프롬프트 복사');b.type='button';b.setAttribute('aria-label',x.title+' 프롬프트 복사');b.onclick=()=>copyPrompt(pre.textContent.trim()+"\n\n"+promptParts(x)[1],b);c.append(makeExampleBox(x,pre,b));actions.append(b);actions.append(el('span','subnote','예시 적용 내용과 청소년 안전 기준이 복사 시 자동 결합됩니다.'));c.append(actions);cards.append(c)}) ;if(!visible.length)cards.append(el('div','empty','검색 결과가 없습니다. 다른 단어로 검색해 보세요.'));}
+function render(){tabs.replaceChildren();groups.forEach(g=>{const b=el('button','tab'+(selected===g?' selected':''),g);b.type='button';b.onclick=()=>{selected=g;render();};tabs.append(b)});const visible=items.filter(x=>(selected==='전체'||x.group===selected)&&(!query||(x.title+' '+x.prompt).toLowerCase().includes(query)));count.textContent=visible.length+'개';cards.replaceChildren();let prev='';visible.forEach(x=>{if(x.group!==prev){let h=el('h2','grouphead',x.group);h.id='group-'+x.group.replace(/ /g,'-');cards.append(h);prev=x.group;}const c=el('article','prompt-card');c.id='prompt-'+x.id;const head=el('div','card-head');head.append(el('div','number','PROMPT '+String(x.id).padStart(2,'0')));head.append(el('h3','',x.title.replace(/^\d\d\s+/,'')));if(x.meta){const m=el('div','meta',x.meta.slice(0,3).join('  ·  '));head.append(m)}c.append(head);const previewHead=el('div','prompt-preview-head');previewHead.append(el('strong','','📄 실습 프롬프트 미리보기'),el('span','','복사할 때 안전 기준이 자동 포함됩니다.'));c.append(previewHead);const pre=x.id===13?el('textarea','prompt-text shortform-editor'):el('div','prompt-text',promptParts(x)[0].trim());
+if(x.id===13){pre.setAttribute('aria-label','13번 30초 숏폼 실습 프롬프트 직접 수정');pre.spellcheck=false;pre.placeholder='이곳에서 프롬프트 내용을 직접 수정하세요.';pre.addEventListener('input',()=>{const state=exampleState.get(13);if(state)state.editedPrompt=pre.value;});previewHead.querySelector('span').textContent='여기에서 직접 수정한 내용까지 그대로 복사됩니다 · 안전 기준 자동 포함';}
+c.append(pre);if(x.id===13){c.append(el('p','shortform-edit-hint','✏️ 예시 적용 후 위 미리보기 창을 클릭하여 직접 글을 바꾸거나 추가하세요. 복사 버튼은 마지막으로 수정한 내용을 사용합니다.'));}const actions=el('div','card-actions');const b=el('button','copy','프롬프트 복사');b.type='button';b.setAttribute('aria-label',x.title+' 프롬프트 복사');b.onclick=()=>copyPrompt((x.id===13?pre.value:pre.textContent).trim()+"\n\n"+promptParts(x)[1],b);c.append(makeExampleBox(x,pre,b));actions.append(b);actions.append(el('span','subnote','예시 적용 내용과 청소년 안전 기준이 복사 시 자동 결합됩니다.'));c.append(actions);cards.append(c)}) ;if(!visible.length)cards.append(el('div','empty','검색 결과가 없습니다. 다른 단어로 검색해 보세요.'));}
 function oldMakeNav(){const seq=[['수업 핵심',1],['자기주도 심화',10],['4장 카드뉴스',21]];seq.forEach(([label,id])=>{nav.append(el('div','group-label',label));const btn=el('button','navbtn',label+' 바로가기');btn.type='button';btn.onclick=()=>{selected=label;query='';document.getElementById('search').value='';render();document.getElementById('prompt-'+id)?.scrollIntoView({behavior:'smooth'})};nav.append(btn)});const all=el('button','navbtn','전체 프롬프트 보기');all.type='button';all.onclick=()=>{selected='전체';query='';document.getElementById('search').value='';render();window.scrollTo({top:0,behavior:'smooth'})};nav.prepend(all)}
 function makeNav(){
  nav.replaceChildren();
